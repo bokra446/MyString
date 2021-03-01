@@ -110,7 +110,7 @@ void MyString::erase(unsigned int pos, unsigned int count) {
 	for (i = pos; i < this->_size - count + 1; i++) {
 		temp[i] = this->_data[i + count];
 	}
-	temp[lengthTemp + 1] = '\0';
+	temp[lengthTemp] = '\0';
 	delete[] _data;
 	this->_data = temp;
 	this->_size = lengthTemp;
