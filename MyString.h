@@ -107,6 +107,20 @@ class MyString
 	private:
 		char* _data;
 		unsigned int _size;
+		//StringRepresentation _string;
 	};
 	
+	/*struct StringRepresentation {
+		union StringType {
+			struct Long {
+				char* _data;
+				unsigned int _size;
+			};
+			struct Short {
+				char[sizeof(Long) - sizeof(char)] _data;
+				unsigned char _size;
+			};
+		};
+		bool isLong;
+	};*/
 };
