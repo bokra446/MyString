@@ -1,5 +1,5 @@
 #pragma once
-namespace MyString{
+namespace MyStringNS{
 class MyString
 {
 	public:
@@ -105,12 +105,12 @@ class MyString
 		bool operator>=(const MyString& comparableString) const;
 		bool operator<=(const MyString& comparableString) const;
 	private:
-		char* _data;
-		unsigned int _size;
-		//StringRepresentation _string;
+		/*char* _data;
+		unsigned int _size;*/
+		StringRepresentation _string;
 	};
 	
-	/*struct StringRepresentation {
+	struct StringRepresentation {
 		union StringType {
 			struct Long {
 				char* _data;
@@ -122,5 +122,5 @@ class MyString
 			};
 		};
 		bool isLong;
-	};*/
+	};
 };

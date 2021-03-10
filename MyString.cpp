@@ -3,13 +3,17 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+using namespace MyStringNS;
 
 MyString::MyString(const char* rawString) {
     // TODO
-	_size = strlen(rawString);
+	/*_size = strlen(rawString);
 	_data = new char[_size + 1];
-	strcpy(_data, rawString);
+	strcpy(_data, rawString);*/
+	size_t length = strlen(rawString);
+	if ()
 }
+
 
 MyString::MyString(const MyString& other) {
     // TODO
