@@ -3,42 +3,62 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
-using namespace MyStringNS;
 
 MyString::MyString(const char* rawString) {
-    // TODO
-	/*_size = strlen(rawString);
-	_data = new char[_size + 1];
-	strcpy(_data, rawString);*/
-	size_t length = strlen(rawString);
-	if ()
+	// TODO
+	if (rawString == nullptr) {
+		_size = 0;
+		_data = nullptr;
+	}
+	else {
+		_size = strlen(rawString);
+		_data = new char[_size + 1];
+		for (int i = 0; i < _size; ++i) {
+			_data[i] = rawString[i];
+		}
+		_data[_size] = '\0';
+	}
 }
 
-
 MyString::MyString(const MyString& other) {
-    // TODO
-	_size = other._size;
-	_data = new char[_size + 1];
-	strcpy(_data, other._data);
+	// TODO
+	if (other == nullptr) {
+		_size = 0;
+		_data = nullptr;
+	}
+	else {
+		_size = other._size;
+		_data = new char[_size];
+		for (int i = 0; i < _size; ++i) {
+			_data[i] = other[i];
+		}
+		_data[_size] = '\0';
+	}
 }
 
 MyString::MyString(MyString&& other) noexcept {
 	_size = other._size;
-	_data = new char[_size + 1];
-	strcpy(_data, other._data);
+	_data = new char[_size];
+	for (int i = 0; i < _size; ++i) {
+		_data[i] = other[i];
+	}
+	_data[_size] = '\0';
 	other._size = 0;
 	other._data = nullptr;
 }
 
 MyString& MyString::operator=(const MyString& other) {
-    // TODO
+	// TODO
 	if (&other == this)
 		return *this;
 	_size = other._size;
-	delete [] _data;
-	_data = new char[_size + 1];
-	strcpy(_data, other._data);
-    return *this;
+	delete[] _data;
+	_data = new char[_size];
+	for (int i = 0; i < _size; ++i) {
+		_data[i] = other[i];
+	}
+	_data[_size] = '\0';
+	return *this;
 }
 
 MyString& MyString::operator=(MyString&& other) noexcept {
@@ -47,12 +67,15 @@ MyString& MyString::operator=(MyString&& other) noexcept {
 		return *this;
 	_size = other._size;
 	delete[] _data;
-	_data = new char[_size + 1];
-	strcpy(_data, other._data);
+	_data = new char[_size];
+	for (int i = 0; i < _size; ++i) {
+		_data[i] = other[i];
+	}
+	_data[_size] = '\0';
 	other._size = 0;
 	other._data = nullptr;
 	return *this;
-} 
+}
 
 MyString::~MyString() {
 	_size = 0;
@@ -90,14 +113,14 @@ void MyString::insert(unsigned int pos, const MyString& insertedString) {
 		temp[i + insertedString._size] = this->_data[i];
 	}
 	temp[lengthTemp] = '\0';
-	delete [] _data;
+	delete[] _data;
 	this->_data = temp;
 	this->_size = lengthTemp;
 }
 
 void MyString::clear() {
 	delete[] _data;
-	this->_data = nullptr;
+	this->_data = 0;
 	this->_size = 0;
 }
 
@@ -144,12 +167,16 @@ bool MyString::isEmpty() const {
 }
 
 const char* MyString::rawString() const {
+	if (_data == 0) {
+		return "";
+	}
 	return _data;
 }
 
 unsigned int MyString::find(const MyString& substring, unsigned int pos) {
+	bool findFlag;
 	int coincidence = 0;
-	for (int i = pos; i < _size; i++){
+	for (int i = pos; i < _size; i++) {
 		if (substring._data[0] == _data[i]) {
 			coincidence++;
 			for (int j = 0; j < substring._size; j++) {
@@ -160,13 +187,19 @@ unsigned int MyString::find(const MyString& substring, unsigned int pos) {
 				else {
 					coincidence++;
 				}
-				if (coincidence == substring._size){
+				if (coincidence == substring._size) {
 					pos = i;
+					findFlag = true;
 				}
 			}
 		}
 	}
-	return pos;
+	if (findFlag) {
+		return pos;
+	}
+	else {
+		return 0;
+	}
 }
 
 int MyString::compare(const MyString& comparableString) const {
@@ -194,8 +227,8 @@ const char& MyString::operator[](const unsigned int idx) const {
 
 
 MyString& MyString::operator+(const MyString& appendedString) {
-    append(appendedString);
-    return *this;
+	append(appendedString);
+	return *this;
 }
 
 bool MyString::operator==(const MyString& comparableString) const {
