@@ -104,6 +104,32 @@ public:
     bool operator<(const MyString& comparableString) const;
     bool operator>=(const MyString& comparableString) const;
     bool operator<=(const MyString& comparableString) const;
+
+    class StringException{
+    protected:
+      int _idx;
+      int _size;
+    public:
+      StringException(int idx, int size);
+      virtual ~StringException();
+
+      virtual const char* what();
+    };
+    class AtException : public StringException{
+    public:
+      AtException(int idx, int size);
+      const char* what() override;
+    };
+    class InsertException : public StringException{
+    public:
+      InsertException(int idx, int size);
+      const char* what() override;
+    };
+    class EraseException : public StringException{
+    public:
+      EraseException(int idx, int size);
+      const char* what() override;
+    };
 private:
     char* _data;
     unsigned int _size;

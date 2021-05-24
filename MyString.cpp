@@ -100,6 +100,9 @@ void MyString::append(const MyString& appendedString) {
 }
 
 void MyString::insert(unsigned int pos, const MyString& insertedString) {
+  if (pos > size()) {
+    throw MyString::InsertException(pos, size());
+  }
 	int lengthTemp = insertedString._size + this->_size;
 	char* temp = new char[lengthTemp + 1];
 	int i;
@@ -125,6 +128,9 @@ void MyString::clear() {
 }
 
 void MyString::erase(unsigned int pos, unsigned int count) {
+  if (pos > size()) {
+    throw MyString::EraseException(pos, size());
+  }
 	if (count > this->_size - pos) {
 		count = this->_size - pos;
 	}
@@ -144,12 +150,16 @@ void MyString::erase(unsigned int pos, unsigned int count) {
 }
 
 char& MyString::at(const unsigned int idx) {
-	assert(idx < size());
+	if (idx < size()){
+    throw AtException(idx, size());
+  }
 	return _data[idx];
 }
 
 const char& MyString::at(const unsigned int idx) const {
-	assert(idx < size());
+	if (idx < size()){
+    throw AtException(idx, size());
+  }
 	return _data[idx];
 }
 
